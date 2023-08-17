@@ -1,0 +1,43 @@
+body {
+  background-color: rgb(25, 25, 25);
+  color: white;
+  font-family: Arial;
+}
+
+.title {
+  font-size: 30px;
+  font-weight: bold;
+}
+
+.rock-icon,
+.paper-icon,
+.scissors-icon {
+  height: 50px;
+}
+
+.move-button {
+  background-color: transparent;
+  cursor: pointer;
+  border: 3px solid white;
+  width: 120px;
+  height: 120px;
+  padding: 30px;
+  border-radius: 100px;
+  margin-bottom: 30px;
+  margin-right: 20px;
+}
+
+.reset-button {
+  font-size: 15px;
+  padding: 8px;
+  cursor: pointer;
+}
+
+.result {
+  font-size: 25px;
+  font-weight: bold;
+}
+
+.js-moves {
+  margin-bottom: 60px;
+}
