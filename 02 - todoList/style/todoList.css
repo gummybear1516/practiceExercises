@@ -1,0 +1,33 @@
+body {
+  font-family: Arial;
+}
+
+.js-add-button {
+  background-color: green;
+  color: white;
+  border: none;
+  cursor: pointer;
+  height: 20px;
+  width: 50px;
+}
+
+.js-delete-button {
+  background-color: darkred;
+  color: white;
+  border: none;
+  cursor: pointer;
+  height: 20px;
+  width: 50px;
+}
+
+.js-error-message {
+  color: red;
+}
+
+.todo-grid,
+.input-grid {
+  display: grid;
+  grid-template-columns: 200px 150px 100px;
+  column-gap: 10px;
+  row-gap: 10px;
+}
