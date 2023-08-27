@@ -1,10 +1,15 @@
-const todoList = [];
+const todoList = JSON.parse(localStorage.getItem('todoList')) || [];
 const output = document.querySelector(".list");
 const inputElement1 = document.querySelector(".input-todo");
 const inputElement2 = document.querySelector(".input-date");
 const errorMessage = document.querySelector(".js-error-message");
 
 displayTodoList();
+
+function saveData() {
+  const JSONTodoList = JSON.stringify(todoList);
+  localStorage.setItem('todoList',JSONTodoList);
+}
 
 function addTask() {
   const name = inputElement1.value.trim();
@@ -19,6 +24,8 @@ function addTask() {
     }
 
     todoList.push({ name, dueDate });
+    saveData();
+
     inputElement1.value = "";
     inputElement2.value = "";
     displayTodoList();
@@ -42,5 +49,6 @@ function displayTodoList() {
 
 function deleteTodo(index) {
   todoList.splice(index, 1);
+  saveData();
   displayTodoList();
 }
