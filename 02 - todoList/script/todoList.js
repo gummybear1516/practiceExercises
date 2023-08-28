@@ -36,14 +36,14 @@ function addTask() {
 
 function displayTodoList() {
   let todoHTML = "";
-  for (let i = 0; i < todoList.length; i++) {
-    const todo = todoList[i];
-    todoHTML += `<div>${todo.name}</div>
-    <div>${todo.dueDate}</div>
+  todoList.forEach(function(value,index){
+    const todo = todoList[index];
+    todoHTML += `<div>${value.name}</div>
+    <div>${value.dueDate}</div>
     <button class="js-delete-button" 
-    onclick="deleteTodo(${i});
+    onclick="deleteTodo(${index});
     ">Delete</button></div>`;
-  }
+  });
   output.innerHTML = todoHTML;
 }
 

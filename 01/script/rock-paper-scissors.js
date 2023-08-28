@@ -1,12 +1,14 @@
 let computerMove = "";
 let result = "";
+let isAutoPlaying = false;
+let intervalId;
 let score = JSON.parse(localStorage.getItem("score")) || {
   wins: 0,
   losses: 0,
   ties: 0,
 };
 
-function playGame(playerMove) {
+function playGame(playerMove) {let intervalID;
   computerMove = pickComputerMove();
 
   if (playerMove === "scissors") {
@@ -44,6 +46,7 @@ function playGame(playerMove) {
     }
   }
 
+  showText(playerMove);
   localStorage.setItem("score", JSON.stringify(score));
 }
 
@@ -65,6 +68,24 @@ function resetScore() {
   const scoreElement = document.querySelector(".js-score");
   scoreElement.innerHTML = `Wins: ${score.wins}, Losses: ${score.losses}, Ties: ${score.ties}`;
 }
+
+
+function autoPlay() {
+  const buttonElement = document.querySelector('.auto-play-button');
+  if(!isAutoPlaying){
+      intervalId = setInterval(function () {
+      playGame(pickComputerMove());
+    }, 1200);
+    isAutoPlaying = true;
+    buttonElement.innerHTML = "Stop Play";
+  }else{
+    clearInterval(intervalId);
+    isAutoPlaying = false;
+    buttonElement.innerHTML = "Auto Play";
+  }
+}
+
+
 function pickComputerMove() {
   const randomNumber = Math.random();
 
