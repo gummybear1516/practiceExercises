@@ -2,13 +2,29 @@ let computerMove = "";
 let result = "";
 let isAutoPlaying = false;
 let intervalId;
+const autoPlayButton = document.querySelector(".auto-play-button");
+const rockbutton = document.querySelector(".js-rock-button");
+const paperbutton = document.querySelector(".js-paper-button");
+const scissorsbutton = document.querySelector(".js-scissors-button");
+const resetButton = document.querySelector(".reset-button");
+
 let score = JSON.parse(localStorage.getItem("score")) || {
   wins: 0,
   losses: 0,
   ties: 0,
 };
 
-function playGame(playerMove) {let intervalID;
+document.body.addEventListener('keydown',(event)=>{
+  if(event.key === 'r'){
+    playGame('rock')
+  } else if (event.key === 'p'){
+    playGame('paper');
+  } else if(event.key === 's'){
+    playGame('scissors');
+  }
+});
+
+function playGame(playerMove) {
   computerMove = pickComputerMove();
 
   if (playerMove === "scissors") {
@@ -47,6 +63,7 @@ function playGame(playerMove) {let intervalID;
   }
 
   showText(playerMove);
+  //store the current score
   localStorage.setItem("score", JSON.stringify(score));
 }
 
@@ -67,24 +84,40 @@ function resetScore() {
   score.ties = 0;
   const scoreElement = document.querySelector(".js-score");
   scoreElement.innerHTML = `Wins: ${score.wins}, Losses: ${score.losses}, Ties: ${score.ties}`;
+  //keep the updated the change while refreshing the page
+  localStorage.setItem("score", JSON.stringify(score));
 }
 
-
 function autoPlay() {
-  const buttonElement = document.querySelector('.auto-play-button');
-  if(!isAutoPlaying){
-      intervalId = setInterval(function () {
+  if (!isAutoPlaying) {
+    intervalId = setInterval(() => {
       playGame(pickComputerMove());
     }, 1200);
     isAutoPlaying = true;
-    buttonElement.innerHTML = "Stop Play";
-  }else{
+    autoPlayButton.innerHTML = "Stop Play";
+  } else {
     clearInterval(intervalId);
     isAutoPlaying = false;
-    buttonElement.innerHTML = "Auto Play";
+    autoPlayButton.innerHTML = "Auto Play";
   }
 }
 
+//add event listener to the buttons
+autoPlayButton.addEventListener("click", () => {
+  autoPlay();
+});
+rockbutton.addEventListener("click", () => {
+  playGame("rock");
+});
+paperbutton.addEventListener("click", () => {
+  playGame("paper");
+});
+scissorsbutton.addEventListener("click", () => {
+  playGame("scissors");
+});
+resetButton.addEventListener("click", () => {
+  resetScore();
+});
 
 function pickComputerMove() {
   const randomNumber = Math.random();
