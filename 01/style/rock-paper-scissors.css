@@ -27,9 +27,15 @@ body {
   margin-right: 20px;
 }
 
-.reset-button, .auto-play-button {
+.reset-button,
+.auto-play-button {
   font-size: 15px;
   padding: 8px;
+  cursor: pointer;
+}
+
+.js-confirm-button,
+.js-deny-button {
   cursor: pointer;
 }
 

@@ -7,6 +7,7 @@ const rockbutton = document.querySelector(".js-rock-button");
 const paperbutton = document.querySelector(".js-paper-button");
 const scissorsbutton = document.querySelector(".js-scissors-button");
 const resetButton = document.querySelector(".reset-button");
+const confirmationMessage = document.querySelector(".js-confirmation-message");
 
 let score = JSON.parse(localStorage.getItem("score")) || {
   wins: 0,
@@ -14,13 +15,19 @@ let score = JSON.parse(localStorage.getItem("score")) || {
   ties: 0,
 };
 
-document.body.addEventListener('keydown',(event)=>{
-  if(event.key === 'r'){
-    playGame('rock')
-  } else if (event.key === 'p'){
-    playGame('paper');
-  } else if(event.key === 's'){
-    playGame('scissors');
+document.body.addEventListener("keydown", (event) => {
+  if (event.key === "r") {
+    playGame("rock");
+  } else if (event.key === "p") {
+    playGame("paper");
+  } else if (event.key === "s") {
+    playGame("scissors");
+  } else if (event.key === "a") {
+    autoPlay();
+  } else if (event.key === "Backspace") {
+    confirmation();
+  } else if (event.key === "Enter") {
+    event.preventDefault();
   }
 });
 
@@ -78,6 +85,19 @@ function showText(playerMove) {
   scoreElement.innerHTML = `Wins: ${score.wins}, Losses: ${score.losses}, Ties: ${score.ties}`;
 }
 
+function confirmation() {
+  confirmationMessage.innerHTML =
+    'Are you sure you want to reset the score? <button class="js-confirm-button">Yes</button> <button class="js-deny-button">No</button>';
+    const confirmButton = document.querySelector(".js-confirm-button");
+    const denyButton = document.querySelector(".js-deny-button");
+    confirmButton.addEventListener('click',()=>{
+      resetScore();
+    })
+    denyButton.addEventListener('click',()=>{
+      confirmationMessage.innerHTML = "";
+    })
+}
+
 function resetScore() {
   score.wins = 0;
   score.losses = 0;
@@ -86,6 +106,7 @@ function resetScore() {
   scoreElement.innerHTML = `Wins: ${score.wins}, Losses: ${score.losses}, Ties: ${score.ties}`;
   //keep the updated the change while refreshing the page
   localStorage.setItem("score", JSON.stringify(score));
+  confirmationMessage.innerHTML = "";
 }
 
 function autoPlay() {
@@ -116,8 +137,15 @@ scissorsbutton.addEventListener("click", () => {
   playGame("scissors");
 });
 resetButton.addEventListener("click", () => {
+  confirmation();
+});
+/*confirmButton.addEventListener("click", () => {
   resetScore();
 });
+/*denyButton.addEventListener("click", () => {
+  confirmationMessage.innerHTML = "";
+});
+*/
 
 function pickComputerMove() {
   const randomNumber = Math.random();

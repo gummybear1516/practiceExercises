@@ -3,6 +3,10 @@ const output = document.querySelector(".list");
 const inputElement1 = document.querySelector(".input-todo");
 const inputElement2 = document.querySelector(".input-date");
 const errorMessage = document.querySelector(".js-error-message");
+const addButton = document.querySelector(".js-add-button");
+addButton.addEventListener('click',()=>{
+  addTask();
+})
 
 displayTodoList();
 
@@ -34,21 +38,27 @@ function addTask() {
   }
 }
 
+function deleteTodo(index) {
+  todoList.splice(index, 1);
+  saveData();
+  displayTodoList();
+}
+
 function displayTodoList() {
   let todoHTML = "";
   todoList.forEach((value, index) => {
     const todo = todoList[index];
     todoHTML += `<div>${value.name}</div>
     <div>${value.dueDate}</div>
-    <button class="js-delete-button" 
-    onclick="deleteTodo(${index});
+    <button class="js-delete-button
     ">Delete</button></div>`;
   });
   output.innerHTML = todoHTML;
-}
 
-function deleteTodo(index) {
-  todoList.splice(index, 1);
-  saveData();
-  displayTodoList();
+  const deleteButton = document.querySelectorAll(".js-delete-button");
+  deleteButton.forEach((deleteButton,index)=>{
+    deleteButton.addEventListener('click',()=>{
+      deleteTodo(index);
+    });
+  });
 }
